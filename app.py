@@ -231,8 +231,9 @@ if st.session_state.frozen_wallets:
     if st.button("Unfreeze Wallet"):
         tx_hash = unfreeze_wallet_on_chain(selected_wallet)
         if tx_hash:
-            st.session_state.frozen_wallets.pop(selected_wallet)
             st.success(f"Wallet unfrozen | TX: {tx_hash}")
+        else:
+            st.warning("Wallet was already unfrozen or not found.")
 
 # ===============================
 # Transaction history
