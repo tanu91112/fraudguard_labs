@@ -149,3 +149,4 @@ streamlit run app.py
 
 **Note: The AI layer is inference-only for this hackathon prototype and is designed to be easily replaceable with trained ML models in production**
 
+**Note:⚠️ Security Note: All keys used in this repository are dummy/test values. No real private keys or user funds are involved.**
