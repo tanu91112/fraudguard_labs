@@ -85,17 +85,6 @@ graph TB
 * Fully operational on QIE Testnet  
 * Safe demo: no real funds
 
-## Screenshots / Demo Proof
-
-*(Replace placeholders with your actual screenshots before submitting)*
-
-* **Streamlit Interface:**  
-  ![Dashboard Screenshot](./screenshots/dashboard.png)  
-* **Wallet Freeze Proof:**  
-  ![Wallet Frozen](./screenshots/frozen_wallet.png)  
-* **Transaction History & Audit:**  
-  ![Transaction History](./screenshots/tx_history.png)
-
 ## Tech Stack
 
 | Layer           | Technology / Tool                    |
