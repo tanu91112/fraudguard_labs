@@ -9,16 +9,6 @@ from dotenv import load_dotenv
 
 
 # ===============================
-# Load environment variables
-# ===============================
-load_dotenv()
-
-RPC_URL = os.getenv("QIE_RPC_URL")
-PRIVATE_KEY = os.getenv("QIE_PRIVATE_KEY")
-CONTRACT_ADDRESS = os.getenv("CONTRACT_ADDRESS")
-DEPLOYER_WALLET = os.getenv("DEPLOYER_WALLET")
-
-# ===============================
 # Streamlit page config
 # ===============================
 st.set_page_config(
@@ -29,23 +19,32 @@ st.set_page_config(
 
 st.title("🛡️ FraudGuard Labs – AI Blockchain Fraud Detection")
 st.info("💡 Demo Mode – No real user funds are affected")
-st.warning("⚠️ Private keys are loaded securely via environment variables")
+st.success("🔒 Safe Demo: No private keys or real transactions are used")
 
 # ===============================
-# Web3 initialization
+# Web3 initialization (Safe Demo)
 # ===============================
+# Public RPC endpoint for QIE Testnet
+RPC_URL = "https://rpc1testnet.qie.digital"
+DEPLOYER_WALLET = "0xE080C04E49ac477CeEA993cf0116518BA1fB1a23"
+CONTRACT_ADDRESS = "0x297dFf53534c4D5aB7043A88a02deF3Ef1fE1e4f"
+
 w3 = Web3(Web3.HTTPProvider(RPC_URL))
 w3.eth.default_account = DEPLOYER_WALLET
 
-if w3.eth.chain_id != 1983: # type: ignore
-    st.error("Wrong network! Connect to QIE Testnet (chainId 1983).")
+# Safe connection check
+if not w3.is_connected():
+    st.error("❌ Failed to connect to blockchain RPC")
     st.stop()
 
-if w3.is_connected():
-    st.success("Connected to QIE Testnet ✅")
-else:
-    st.error("Failed to connect to QIE Testnet ❌")
-    st.stop()
+# Optional: network check without stopping the app
+try:
+    if w3.eth.chain_id != 1983:
+        st.warning("⚠️ Connected to wrong network")
+except Exception as e:
+    st.warning(f"Could not check chain ID: {e}")
+
+st.success("Connected to QIE Testnet ✅")
 
 # ===============================
 # Load contract ABI
@@ -68,75 +67,19 @@ def get_nonce():
     )
 
 def freeze_wallet_on_chain(wallet_address, tx_id_hex, risk_score):
-    try:
-        tx_id_bytes32 = bytes.fromhex(tx_id_hex[2:])
-        if len(tx_id_bytes32) != 32:
-            raise ValueError("Transaction ID must be 32 bytes")
-
-        tx = contract.functions.logFraud(
-            tx_id_bytes32,
-            int(risk_score),
-            Web3.to_checksum_address(wallet_address)
-        ).build_transaction({
-            "from": w3.eth.default_account,
-            "nonce": get_nonce(),
-            "gas": 200000,
-            "gasPrice": w3.eth.gas_price
-        })
-
-        signed_tx = w3.eth.account.sign_transaction(
-            tx,
-            private_key=PRIVATE_KEY
-        )
-
-        tx_hash = w3.eth.send_raw_transaction(
-            signed_tx.rawTransaction
-        )
-
-        w3.eth.wait_for_transaction_receipt(tx_hash)
-        return tx_hash.hex()
-
-    except Exception as e:
-        st.error(f"Freeze failed: {e}")
-        return None
-
+    # Demo: just store in session state
+    st.session_state.frozen_wallets[wallet_address] = "SIMULATED_TX_HASH"
+    return "SIMULATED_TX_HASH"
 
 def unfreeze_wallet_on_chain(wallet_address):
-    try:
-        tx = contract.functions.unfreezeWallet(
-            Web3.to_checksum_address(wallet_address)
-        ).build_transaction({
-            "from": w3.eth.default_account,
-            "nonce": get_nonce(),
-            "gas": 100000,
-            "gasPrice": w3.eth.gas_price
-        })
-
-        signed_tx = w3.eth.account.sign_transaction(
-            tx,
-            private_key=PRIVATE_KEY
-        )
-
-        tx_hash = w3.eth.send_raw_transaction(
-            signed_tx.rawTransaction
-        )
-
-        w3.eth.wait_for_transaction_receipt(tx_hash)
-        return tx_hash.hex()
-
-    except Exception as e:
-        st.error(f"Unfreeze failed: {e}")
-        return None
-
+    # Demo: remove from session state
+    st.session_state.frozen_wallets.pop(wallet_address, None)
+    return "SIMULATED_UNFREEZE_TX_HASH"
 
 def is_wallet_frozen_on_chain(wallet_address):
-    try:
-        return contract.functions.isWalletFrozen(
-            Web3.to_checksum_address(wallet_address)
-        ).call()
-    except Exception as e:
-        st.error(f"Status check failed: {e}")
-        return False
+    # Check session state instead of real blockchain
+    return wallet_address in st.session_state.frozen_wallets
+
 
 # ===============================
 # Load AI model
