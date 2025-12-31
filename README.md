@@ -1,4 +1,4 @@
-# FraudGuard Labs – AI × Blockchain Fraud Detection
+# 🛡️ FraudGuard Labs – AI × Blockchain Fraud Detection 🤖🔗
 
 **An AI-powered fraud detection system that flags high-risk wallets and enables smart-contract–based freezing on QIE Blockchain, ensuring transparent, tamper-proof enforcement of AI decisions.**
 
