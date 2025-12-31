@@ -172,7 +172,7 @@ with st.sidebar:
     
     # Risk Legend
     st.markdown("### Risk Legend")
-    st.markdown("🟢 Low < 50  |  🟠 Medium 50–79  |  🔴 High ≥ 80")
+    st.markdown("🟢 Low < 50  |  🟠 Medium 50–79  |  🔴 High ≥ risk_threshold")
 
 # ===============================
 # Transaction analysis
