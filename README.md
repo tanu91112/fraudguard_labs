@@ -36,11 +36,34 @@
 
 The architecture diagram shows logical system components, while the Streamlit dashboard is a simplified demo interface that exposes those components through a single UI.
 
+```mermaid
 graph TB
   A[Transaction Data] --> B[AI Inference Engine]
   B --> C[QIE Smart Contract]
   C --> D[Immutable Event Log]
   D --> E[Streamlit Dashboard]
+
+```
+
+##  Deployment vs On-Chain Mode
+
+This project supports two modes:
+
+### 🔹 Demo Deployment Mode (Public)
+- Used for live deployment
+- No private keys
+- No real on-chain transactions
+- Simulates wallet freezing for safety
+
+### 🔹 On-Chain Enforcement Mode (Testnet)
+- Uses QIE Testnet smart contracts
+- Signs and submits real transactions
+- Logs fraud events immutably on-chain
+- Requires environment variables (.env)
+
+The deployed demo focuses on UI + AI flow,
+while the repository demonstrates full on-chain enforcement logic.
+
 
 **Key Components:**
 
@@ -66,7 +89,7 @@ graph TB
 ### 3️⃣ Blockchain Enforcement
 
 * **logFraud()** → records AI verdict on-chain  
-* **freezeWallet()** → automatically freezes high-risk wallets  
+* **freezeWallet()**  → flags wallets as frozen within the smart contract
 * **unfreezeWallet()** → admin override  
 * **isWalletFrozen()** → check wallet status  
 * Events stored for auditability
@@ -135,7 +158,6 @@ streamlit run app.py
 3. **Blockchain Enforcement:** Smart contract freezes wallets, logs verdicts immutably.  
 4. **Runs on QIE:** Fully operational on QIE Testnet, verified via screenshots and transaction hashes.
 
-> Judges see: *AI decides → Smart contract enforces → Transparent, immutable record*
 
 ## Contract & Network Info
 
@@ -145,8 +167,18 @@ streamlit run app.py
 | Deployer Wallet  | `0xE080C04E49ac477CeEA993cf0116518BA1fB1a23` |
 | Network          | QIE Testnet                                  |
 
-**Note**:Even if a real-looking transaction hash is used, the system operates on a testnet and performs only off-chain AI scoring and on-chain logging. No assets are ever moved or locked. The ‘freeze’ is a smart-contract flag used for compliance workflows, not a real wallet lock
 
-**Note: The AI layer is inference-only for this hackathon prototype and is designed to be easily replaceable with trained ML models in production**
+## Important Notes
+
+- This project runs exclusively on QIE Testnet.
+- No real funds are moved or locked at any point.
+- Wallet “freezing” is implemented as a smart-contract compliance flag.
+- The AI layer is inference-only for this hackathon prototype and can be replaced with trained ML models in production.
+- All keys used are dummy/test values. No real private keys or user funds are involved.
+
+
+
+
+
 
 **Note:⚠️ Security Note: All keys used in this repository are dummy/test values. No real private keys or user funds are involved.**
