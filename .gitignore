@@ -1,0 +1,61 @@
+# ===============================
+# Environment variables (SECRETS)
+# ===============================
+.env
+.env.*
+!.env.example
+
+# ===============================
+# Python cache / compiled files
+# ===============================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# ===============================
+# Virtual environments
+# ===============================
+venv/
+.env_venv/
+.venv/
+venv.bak/
+
+# ===============================
+# Streamlit
+# ===============================
+.streamlit/secrets.toml
+
+# ===============================
+# OS / Editor files
+# ===============================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ===============================
+# Logs & temp files
+# ===============================
+*.log
+*.tmp
+
+# ===============================
+# Jupyter (if any)
+# ===============================
+.ipynb_checkpoints/
+
+# ===============================
+# Model artifacts (if regenerated)
+# ===============================
+*.pkl
+*.joblib
+models/__pycache__/
+
+# ===============================
+# Node / blockchain leftovers
+# ===============================
+node_modules/
+artifacts/
+cache/

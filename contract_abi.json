@@ -1,0 +1,27 @@
+[
+  {
+    "inputs": [
+      {"internalType":"bytes32","name":"transactionId","type":"bytes32"},
+      {"internalType":"uint256","name":"riskScore","type":"uint256"},
+      {"internalType":"address","name":"walletAddress","type":"address"}
+    ],
+    "name":"logFraud",
+    "outputs": [],
+    "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "inputs":[{"internalType":"address","name":"walletAddress","type":"address"}],
+    "name":"unfreezeWallet",
+    "outputs":[],
+    "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "inputs":[{"internalType":"address","name":"walletAddress","type":"address"}],
+    "name":"isWalletFrozen",
+    "outputs":[{"internalType":"bool","name":"","type":"bool"}],
+    "stateMutability":"view",
+    "type":"function"
+  }
+]
