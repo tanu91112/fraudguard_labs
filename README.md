@@ -228,5 +228,3 @@ streamlit run app.py
 
 **NOTE**- AI inference is rule-based for demo clarity; architecture supports ML/DL models in future.
 
-
-**NOTE**- The submitted ZIP includes a safe demo deployment used for judging, along with full QIE testnet on-chain enforcement logic in the repository
