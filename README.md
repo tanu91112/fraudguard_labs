@@ -1,5 +1,9 @@
 # 🛡️ FraudGuard Labs – AI × Blockchain Fraud Detection 
 
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.29.0-red)](https://streamlit.io/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+
 **An AI-powered fraud detection system that flags high-risk wallets and enables smart-contract–based freezing on QIE Blockchain, ensuring transparent, tamper-proof enforcement of AI decisions.**
 
 ## Problem Statement
