@@ -67,6 +67,18 @@ graph TB
 
 ```
 
+## 🏗️ Architecture
+
+---
+<table>
+<td align="center">
+      <img src="Images/Architecture.png" width="900" />
+      <p>Architecture</p>
+    </td>
+</table>
+
+---
+
 ##  Deployment vs On-Chain Mode
 
 This project supports two modes:
