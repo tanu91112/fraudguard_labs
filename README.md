@@ -32,6 +32,24 @@
 3. **Audit Trail**  
    - All fraud detection and enforcement actions are **permanently logged** for transparency.
 
+
+## AI → Blockchain Decision Bridge
+
+FraudGuard Labs follows a clear separation of responsibilities:
+
+- The AI engine runs **off-chain** and produces a structured decision:
+  - `riskScore` (0–100)
+  - `recommendedAction` (No Action / Log Only / Freeze)
+
+- The blockchain **never runs AI**.
+  Instead, it enforces the AI decision through explicit smart contract calls:
+  - `logFraud()` for medium-risk transactions
+  - `freezeWallet()` for high-risk wallets
+
+This ensures AI intelligence remains flexible, while blockchain guarantees
+trust, enforcement, and immutability.
+
+
 ## System Architecture
 
 The architecture diagram shows logical system components, while the Streamlit dashboard is a simplified demo interface that exposes those components through a single UI.
@@ -64,6 +82,11 @@ This project supports two modes:
 The deployed demo focuses on UI + AI flow,
 while the repository demonstrates full on-chain enforcement logic.
 
+> Note: The public Streamlit demo runs in safe simulation mode for judging,
+while full on-chain enforcement is implemented and verified on QIE Testnet
+(see Remix, MetaMask, and transaction screenshots).
+
+
 
 **Key Components:**
 
@@ -86,6 +109,19 @@ while the repository demonstrates full on-chain enforcement logic.
 * Outputs **risk score** (0-100)  
 * Reason for risk flagged clearly in UI
 
+#### Example AI Decision Output
+
+Risk Score: **87**  
+Risk Level: **High**
+
+Decision Factors:
+- Unusually large transaction amount (+40)
+- High transaction frequency in short time window (+30)
+- Suspicious activity timing (+17)
+
+Recommended Action: **Freeze Wallet**
+
+
 ### 3️⃣ Blockchain Enforcement
 
 * **logFraud()** → records AI verdict on-chain  
@@ -93,6 +129,15 @@ while the repository demonstrates full on-chain enforcement logic.
 * **unfreezeWallet()** → admin override  
 * **isWalletFrozen()** → check wallet status  
 * Events stored for auditability
+
+**On-Chain Events for Auditability**
+
+| Event | Purpose |
+|------|--------|
+| FraudLogged | Stores AI risk verdict immutably |
+| WalletFrozen | Records automated enforcement |
+| WalletUnfrozen | Records admin override |
+
 
 ### 4️⃣ Configurable Thresholds
 
@@ -158,6 +203,7 @@ streamlit run app.py
 3. **Blockchain Enforcement:** Smart contract freezes wallets, logs verdicts immutably.  
 4. **Runs on QIE:** Fully operational on QIE Testnet, verified via screenshots and transaction hashes.
 
+> Judges see: *AI decides → Smart contract enforces → Transparent, immutable record*
 
 ## Contract & Network Info
 
@@ -176,9 +222,7 @@ streamlit run app.py
 - The AI layer is inference-only for this hackathon prototype and can be replaced with trained ML models in production.
 - All keys used are dummy/test values. No real private keys or user funds are involved.
 
+**NOTE**- AI inference is rule-based for demo clarity; architecture supports ML/DL models in future.
 
 
-
-
-
-**Note:⚠️ Security Note: All keys used in this repository are dummy/test values. No real private keys or user funds are involved.**
+**NOTE**- The submitted ZIP includes a safe demo deployment used for judging, along with full QIE testnet on-chain enforcement logic in the repository
